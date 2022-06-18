@@ -230,4 +230,19 @@ abstract class Filter implements FilterInterface, ChainableFilterInterface
     {
         $this->active = $active;
     }
+
+    /**
+     * NEXT_MAJOR: Remove this method.
+     */
+    public function getRenderSettings(): array
+    {
+        if (!method_exists($filter, 'getFormOptions')) {
+            throw new \BadMethodCall('You MUST implements `getFormOptions()`.')
+        }
+
+        return [
+            FilterDataType::class,
+            $filter->getFormOptions(),
+        ]
+    }
 }
